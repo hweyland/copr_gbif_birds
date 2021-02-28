@@ -1,0 +1,15 @@
+---
+title: "copr_birds"
+author: "Hanna Weyland"
+date: "2/28/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Intro 
+#download data from GBIF for birds 
+#clip to just be COPR boundary 
+#filter

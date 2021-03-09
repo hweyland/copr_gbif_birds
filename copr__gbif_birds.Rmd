@@ -27,5 +27,3 @@ gbif_birds_obs_filtered <- gbif_birds_obs %>%
   filter(recorded_by %in% c("Mark Holmgren", "Dave Comption", "Nick Lethaby", "Tom Turner", "Jasen Liu") | (year >= 1968)) %>% #filter for selected observers OR date (to include records without selected observers)
   top_n(5, date) #select top 5 records for each species by date (most recent)
 ```
-
-

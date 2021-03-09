@@ -6,10 +6,53 @@ output: html_document
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+library(janitor)
+library(tidyverse)
+library(here)
+library(reshape2)
 ```
 
-## Intro 
+## Intro
+
+```{r}
+#read in data 
+copr_birds_obs <- read_csv(here("GBIF_bird_obs_clipped.csv")) %>% 
+  clean_names()
+```
+
+```{r}
+copr_birds_obs_species <- copr_birds_obs %>% 
+  group_by(species, year)
+```
+
+
+```{r}
+
+#filter data for selected observers  
+copr_birds_obs_dates <- copr_birds_obs %>% 
+  filter(year >= 2015)
+
+copr_birds_obs_names <- copr_birds_obs %>% 
+  filter(recorded_by %in% c("Mark Holmgren", "Dave Comption", "Nick Lethaby", "Tom Turner", "Jasen Liu"))
+spp <- unique(copr_birds_obs$species) 
+ider <- c("Mark Holmgren", "Dave Comption", "Nick Lethaby", "Tom Turner", "Jasen Liu")
+for(i in spp){
+  if(copr_birds_obs$identifier != ider)
+    
+}
+  
+copr_birds_obs_names <- copr_birds_obs %>% 
+  filter(recorded_by %in% c("Mark Holmgren", "Dave Comption", "Nick Lethaby", "Tom Turner", "Jasen Liu"))
+```
+
+```{r}
+copr_birds_obs_names_melt <- copr_birds_obs_names %>% 
+```
+
+
+
+
+
 #download data from GBIF for birds 
 #clip to just be COPR boundary 
 #filter

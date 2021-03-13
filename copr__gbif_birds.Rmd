@@ -44,6 +44,13 @@ gbif_birds_obs_filtered_unique <- data_frame(unique(gbif_birds_obs_filtered$spec
 nrow(gbif_birds_obs_filtered_unique)
 ```
 
+
+```{r}
+#write file for upload/save
+write.csv(gbif_birds_obs_filtered,"gbif_birds_obs_filtered.csv")
+```
+
+
 ```{r}
 #write file for upload to Symbiota
 write_tsv(gbif_birds_obs_filtered,"gbif_birds_obs_filtered.csv")

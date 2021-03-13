@@ -10,23 +10,22 @@ library(janitor)
 library(tidyverse)
 library(here)
 library(lubridate)
-
 ```
 
-### Objective: 5 observations for all taxa with at least one observation from selected observers 
+### Objective: Create a dataframe with 5 observations for all taxa with at least one observation from selected observers 
 
 ```{r}
 #read in data
 gbif_birds_obs <- read_csv(here("GBIF_bird_obs_clipped.csv"))
+```
 
+```{r}
 #clean column names and create new date_transform and selected_observer columns. Can add new selected observers to this list to include in the filtering.
 gbif_birds_obs <- gbif_birds_obs %>%
   clean_names() %>%
   mutate(date_transform = paste(year, month, day, sep = "-")) %>%
-  mutate(selected_observer = if_else(recorded_by %in% c("Mark Holmgren","Dave Comption","Nick Lethaby", "Tom Turner","Jasen Liu"), TRUE, FALSE))
-
+  mutate(selected_observer = if_else(recorded_by %in% c("Mark Holmgren","Dave Comption","Nick Lethaby", "Tom Turner","Jasen Liu", "obsr548926", "obsr111092", "obsr51183", "obsr420881", "obsr302151"), TRUE, FALSE))
 ```
-
 
 ```{r}
 #group by species then arrange by date and if a selected observer. Select top 5 records for each species. Because they are already arranged, the ones that are from selected observers or more recent should be at the top.
@@ -35,22 +34,19 @@ gbif_birds_obs_filtered <- gbif_birds_obs %>%
   arrange(selected_observer) %>%
   arrange(date_transform) %>%
   top_n(5, date_transform)
-
 ```
 
 ```{r}
 #create unique list of all species and check to see if same number of unique species as output
-gbif_birds_obs_unique <- data_frame(unique(gbif_birds_obs$species))
+gbif_birds_obs_unique <- tibble(unique(gbif_birds_obs$species))
 nrow(gbif_birds_obs_unique)
 gbif_birds_obs_filtered_unique <- data_frame(unique(gbif_birds_obs_filtered$species))
 nrow(gbif_birds_obs_filtered_unique)
-
 ```
 
 ```{r}
 #write file for upload to Symbiota
 write_tsv(gbif_birds_obs_filtered,"gbif_birds_obs_filtered.csv")
-
 ```
 
 
